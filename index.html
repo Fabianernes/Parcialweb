@@ -1,0 +1,123 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+  <title> Use of JQuery to Add Edit Delete Table Row </title>  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script> 
+  <link rel="stylesheet" href="indexcss.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
+</head>  
+<body>  
+
+
+    <div class="container">
+
+        <p class="titulo"><b>Web</b>Developer</p>
+        
+        <div class="formul">
+            
+
+        <form id="form" class="form">
+
+            <p>formulario de afiliación</p>
+
+            <div class="form-control">
+                <input type="text" placeholder="Nombre completo" id="nombre"  />
+                <i class="fas fa-user"></i>
+            </div>
+
+            <div class="form-control">
+                <input type="email" placeholder="Email" id="apellido">
+                <i class="fas fa-envelope"></i>
+            </div>
+
+            <div class="form-control">
+                <input type="text" name="tel" placeholder="text" id="tel">
+                <i class="fas fa-phone"></i>
+            </div>
+
+                <div class="form-control"> 
+                  <input type="text" name="nombre" required="">  
+                </div>   
+
+                <div>
+                    <input type="text" name="porcentaje" value="0" id="" hidden>
+                </div>
+                 
+                <button type="submit" class="boton-guardar">Gustos</button>  
+            
+            <div class="tabla-contenedor">
+                <table class="data-table">  
+                  <thead>  
+                    <th>Gusto</th>  
+                    <th>%</th>  
+                    <th>edit</th>  
+                  </thead>  
+                  <tbody>           
+                  </tbody>
+                </table> 
+            </div>
+
+
+        </form>
+    </div>
+    </div> 
+     
+<script type="text/javascript">  
+     
+    $("form").submit(function(e){  
+        e.preventDefault();  
+        var nombre = $("input[name='nombre']").val();  
+        var porcentaje = $("input[name='porcentaje']").val();  
+       
+        $(".data-table tbody").append("<tr data-nombre='"+nombre+"' data-porcentaje='"+porcentaje+"'><td>"+nombre+"</td><td>"+porcentaje+"</td><td><button class='boton-editar'>editar</button></td></tr>");  
+      
+        $("input[name='nombre']").val('');  
+        $("input[name='porcentaje']").val('');  
+    });  
+      
+    $("body").on("click", ".boton-editar", function(){  
+        var nombre = $(this).parents("tr").attr('data-nombre');  
+        var porcentaje = $(this).parents("tr").attr('data-porcentaje');  
+      
+        $(this).parents("tr").find("td:eq(0)").html('<input name="edit_nombre" class="form-controla" value="'+nombre+'">');  
+        $(this).parents("tr").find("td:eq(1)").html('<input name="edit_porcentaje" class="form-controla" value="'+porcentaje+'">');  
+      
+        $(this).parents("tr").find("td:eq(2)").prepend("<button class='boton-aceptar'>Aceptar</button><button class='boton-cancelar'>Cancelar</button>")  
+        $(this).hide();  
+    });  
+     
+    $("body").on("click", ".boton-cancelar", function(){  
+        var nombre = $(this).parents("tr").attr('data-nombre');  
+        var porcentaje = $(this).parents("tr").attr('data-porcentaje');  
+      
+        $(this).parents("tr").find("td:eq(0)").text(nombre);  
+        $(this).parents("tr").find("td:eq(1)").text(porcentaje);  
+     
+        $(this).parents("tr").find(".boton-editar").show();  
+        $(this).parents("tbody").find(".boton-aceptar").remove();  
+        $(this).parents("tbody").find(".boton-cancelar").remove();
+    });  
+     
+    $("body").on("click", ".boton-aceptar", function(){  
+        var nombre = $(this).parents("tr").find("input[name='edit_nombre']").val();  
+        var porcentaje = $(this).parents("tr").find("input[name='edit_porcentaje']").val();  
+      
+        $(this).parents("tr").find("td:eq(0)").text(nombre);  
+        $(this).parents("tr").find("td:eq(1)").text(porcentaje);  
+       
+        $(this).parents("tr").attr('data-nombre', nombre);  
+        $(this).parents("tr").attr('data-porcentaje', porcentaje);  
+      
+        $(this).parents("tr").find(".boton-editar").show();  
+        $(this).parents("tr").find(".boton-cancelar").remove();  
+        $(this).parents("tr").find(".boton-aceptar").remove();  
+    });  
+      
+</script>
+
+       
+</body>  
+</html>  
